@@ -1,0 +1,86 @@
+/* Global layout */
+:root{
+	--bg1: #111214; /* very dark grey */
+	--bg2: #2b2d31; /* lighter dark grey */
+	--text: #e9eef8; /* soft light text */
+}
+html,body{
+	height:100%;
+}
+body{
+	margin:0;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
+	background: linear-gradient(135deg,var(--bg1),var(--bg2));
+	color:var(--text);
+}
+
+.page{
+	min-height:100vh;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:4vh 4vw;
+	position:relative; /* enable pseudo-element positioning */
+	overflow:hidden; /* crop the oversized logo */
+}
+
+.card{
+	text-align:center;
+	width:100%;
+	max-width:900px;
+	position:relative; /* place above background logo */
+	z-index:2;
+}
+
+/* Large decorative logo placed bottom-right and partially off-screen. */
+.page::before{
+	content: "";
+	position:absolute;
+	right: -8vw; /* push slightly off the right edge */
+	bottom: -8vh; /* push slightly off the bottom edge */
+	width: 55vw; /* occupies roughly half the viewport width */
+	height: 55vw;
+	max-width: 1100px;
+	max-height: 1100px;
+	background-image: url("../%23%20Assets/shroud-logo-dark.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center; /* adjust as-needed so the 'S' remains visible */
+	opacity: 0.5; /* subtle but visible — tweak to taste */
+	pointer-events: none; /* avoid interfering with interactions */
+	z-index:1;
+}
+
+.logo{ display:none; }
+
+.headline{
+	margin:0.25rem 0 0.25rem 0;
+	font-weight:700;
+	line-height:1.03;
+	font-size: clamp(1.6rem, 6vw, 5rem);
+	letter-spacing: -0.02em;
+	text-shadow: 0 4px 18px rgba(6,10,30,0.18);
+}
+
+.subhead{
+	margin:0.5rem 0 0 0;
+	opacity:0.92;
+	font-size: clamp(0.95rem, 2.2vw, 1.5rem);
+}
+
+/* small decorative fade-in for subtle polish */
+.card{ animation: fadeIn .7s ease both; }
+@keyframes fadeIn{ from{opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;} }
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce){
+	.card{ animation:none; }
+}
+
+/* Layout tweaks for very narrow screens */
+@media (max-width:380px){
+	.logo{ width: clamp(60px, 22vw, 140px); }
+	.headline{ font-size: clamp(1.25rem, 8vw, 2.25rem); }
+}
